@@ -62,11 +62,21 @@ export const ProjectsView = () => {
                 open={newProjectDialogOpen}
                 onOpenChange={setNewProjectDialogOpen}
             />
-            <div className="min-h-screen bg-sidebar flex flex-col items-center justify-center p-6 md:p-16 relative">
-                <div className="absolute top-4 right-4 md:top-8 md:right-8">
+            <div className="min-h-screen bg-sidebar flex flex-col items-center justify-center p-6 md:p-16 relative overflow-hidden">
+
+                <div className="absolute inset-0 pointer-events-none z-0">
+                    <div className="absolute inset-0 bg-sidebar" />
+
+                    <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-primary/60 blur-[100px] opacity-100 mix-blend-screen" />
+                    <div className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-ring/40 blur-[100px] opacity-80 md:opacity-100" />
+                    <div className="absolute inset-0 bg-sidebar/60 backdrop-blur-3xl" />
+                    <div className="absolute inset-0 bg-linear-to-t from-sidebar/80 to-transparent" />
+                </div>
+
+                <div className="absolute top-4 right-4 md:top-8 md:right-8 z-10">
                     <UserButton />
                 </div>
-                <div className="w-full max-w-sm mx-auto flex flex-col gap-4 items-center">
+                <div className="w-full max-w-sm mx-auto flex flex-col gap-4 items-center z-10 relative">
 
                     <div className="flex justify-between gap-4 w-full items-center">
 

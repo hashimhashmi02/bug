@@ -1,1 +1,0 @@
-﻿src/components/ai-elements/sandbox.tsx(19,10): error TS2459: Module '"./tool"' declares 'getStatusBadge' locally, but it is not exported.

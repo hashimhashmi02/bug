@@ -1,3 +1,0 @@
-﻿src/components/ai-elements/sandbox.tsx(19,10): error TS2459: Module '"./tool"' declares 'getStatusBadge' locally, but it is not exported.
-src/components/ai-elements/speech-input.tsx(55,5): error TS2717: Subsequent property declarations must have the same type.  Property 'SpeechRecognition' must be of type 'new () => SpeechRecognition', but here has type 'any'.
-src/components/ai-elements/speech-input.tsx(56,5): error TS2717: Subsequent property declarations must have the same type.  Property 'webkitSpeechRecognition' must be of type 'new () => SpeechRecognition', but here has type 'any'.

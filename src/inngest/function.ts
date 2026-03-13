@@ -1,6 +1,6 @@
 import { generateText } from "ai";
 import { inngest } from "./client";
-import { google } from "@ai-sdk/google";
+import { openai } from "@ai-sdk/openai";
 import { firecrawl } from "@/lib/firecrawl";
 
 const URL_REGEX = /https?:\/\/[^\s]+/g;
@@ -34,15 +34,8 @@ export const demoGenerate = inngest.createFunction(
 
     await step.run("generate-text", async () => {
       return await generateText({
-        model: google('gemini-2.5-flash'),
+        model: openai('gpt-4.1'),
         prompt: finalPrompt,
-        providerOptions: {
-          google: {
-            thinkingConfig: {
-              thinkingBudget: 8192,
-            },
-          },
-        },
         experimental_telemetry: {
           isEnabled: true,
           recordInputs: true,

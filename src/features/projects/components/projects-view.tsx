@@ -4,6 +4,7 @@ import { Poppins } from "next/font/google";
 import { SparkleIcon } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { UserButton } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -61,7 +62,10 @@ export const ProjectsView = () => {
                 open={newProjectDialogOpen}
                 onOpenChange={setNewProjectDialogOpen}
             />
-            <div className="min-h-screen bg-sidebar flex flex-col items-center justify-center p-6 md:p-16">
+            <div className="min-h-screen bg-sidebar flex flex-col items-center justify-center p-6 md:p-16 relative">
+                <div className="absolute top-4 right-4 md:top-8 md:right-8">
+                    <UserButton />
+                </div>
                 <div className="w-full max-w-sm mx-auto flex flex-col gap-4 items-center">
 
                     <div className="flex justify-between gap-4 w-full items-center">

@@ -101,7 +101,7 @@ export async function POST(request: Request) {
       .replace("{documentation}", documentationContext);
 
     const { output } = await generateText({
-      model: openai("gpt-4.1-mini"),
+      model: openai("gpt-4.1"),
       output: Output.object({ schema: quickEditSchema }),
       prompt,
     });

@@ -84,12 +84,12 @@ export const processMessage = inngest.createFunction(
       throw new NonRetriableError("Conversation not found");
     }
 
-    // Fetch recent messages for conversation context
+    // Fetch recent messages for conversation context (limited to avoid exceeding token limits)
     const recentMessages = await step.run("get-recent-messages", async () => {
       return await convex.query(api.system.getRecentMessages, {
         internalKey,
         conversationId,
-        limit: 10,
+        limit: 4,
       });
     });
 
@@ -102,8 +102,14 @@ export const processMessage = inngest.createFunction(
     );
 
     if (contextMessages.length > 0) {
+      const MAX_MSG_CHARS = 2000;
       const historyText = contextMessages
-        .map((msg) => `${msg.role.toUpperCase()}: ${msg.content}`)
+        .map((msg) => {
+          const truncated = msg.content.length > MAX_MSG_CHARS
+            ? msg.content.slice(0, MAX_MSG_CHARS) + "... [truncated]"
+            : msg.content;
+          return `${msg.role.toUpperCase()}: ${truncated}`;
+        })
         .join("\n\n");
 
       systemPrompt += `\n\n## Previous Conversation (for context only - do NOT repeat these responses):\n${historyText}\n\n## Current Request:\nRespond ONLY to the user's new message below. Do not repeat or reference your previous responses.`;
@@ -195,7 +201,18 @@ export const processMessage = inngest.createFunction(
     });
 
     // Run the agent
-    const result = await network.run(message);
+    let result;
+    try {
+      result = await network.run(message);
+    } catch (error: any) {
+      if (
+        (error instanceof NonRetriableError || error?.name === 'NonRetriableError') &&
+        error?.message?.includes('429')
+      ) {
+        throw new Error(`AI Rate limit exceeded, retrying: ${error.message}`);
+      }
+      throw error;
+    }
 
     // Extract the assistant's text response from the last agent result
     const lastResult = result.state.results.at(-1);

@@ -124,7 +124,7 @@ export const processMessage = inngest.createFunction(
         name: "title-generator",
         system: TITLE_GENERATOR_SYSTEM_PROMPT,
         model: openai({
-          model: "gpt-4.1",
+          model: "gpt-4.1-mini",
           defaultParameters: { temperature: 0.1 },
         }),
        });
@@ -162,7 +162,7 @@ export const processMessage = inngest.createFunction(
       description: "An expert AI coding assistant",
       system: systemPrompt,
        model: openai({
-        model: "gpt-4.1",
+        model: "gpt-4.1-mini",
         defaultParameters: { temperature: 0.1 },
        }),
        tools: [
